@@ -1,0 +1,88 @@
+//package main
+//
+//import (
+//	"fmt"
+//	"go/ast"
+//	"reflect"
+//
+//	//"go/types"
+//	"golang.org/x/tools/go/loader"
+//	"log"
+//)
+//
+//func main() {
+//	testData := "./test"
+//
+//	ctx := &Context{}
+//	ctx.Load(testData)
+//	ctx.Process()
+//}
+//
+//type Context struct {
+//	cwd string
+//	loader.Config
+//}
+//
+//func (ctx *Context) Load(args string) {
+//	ctx.Config.Import(args)
+//}
+//
+//func (ctx *Context) Process() DivisionZeroErrors {
+//	prog, err := ctx.Config.Load()
+//	if err != nil {
+//		log.Fatalf("cannot load packages: %s", err)
+//	}
+//
+//	var allDivisionZero DivisionZeroErrors
+//	for _, pkg := range prog.Imported {
+//		divisionZero := doPackage(prog, pkg)
+//		allDivisionZero = append(allDivisionZero, divisionZero...)
+//	}
+//
+//	return allDivisionZero
+//}
+//
+//func doPackage(prog *loader.Program, pkg *loader.PackageInfo) DivisionZeroErrors {
+//	//checked := make(map[string]bool)
+//	//varValue := make(map[string]interface{})
+//
+//	for _, file := range pkg.Files {
+//		ast.Inspect(file, func(node ast.Node) bool {
+//			ttype := reflect.TypeOf(node)
+//			if ttype != nil {
+//				fmt.Print(ttype.String())
+//				id, ok := node.(*ast.Ident)
+//				if ok {
+//					fmt.Printf(" %v", id)
+//				}
+//				b, ok := node.(*ast.BinaryExpr)
+//				if ok {
+//					fmt.Printf(" %v", b.Op.String())
+//				}
+//				a, ok := node.(*ast.AssignStmt)
+//				if ok {
+//					fmt.Printf(" %v", a.Tok.String())
+//					for _, rhs := range a.Rhs {
+//						bl, ok := rhs.(*ast.BasicLit)
+//						if ok {
+//							fmt.Printf(" value:%v", bl.Value)
+//						}
+//
+//					}
+//				}
+//				fmt.Println()
+//				return true
+//			}
+//			return false
+//		})
+//	}
+//
+//	return nil
+//}
+//
+//type DivisionZeroError struct {
+//	VarName string
+//	Lint    int
+//}
+//
+//type DivisionZeroErrors []*DivisionZeroError
